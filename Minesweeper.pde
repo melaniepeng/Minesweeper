@@ -1,5 +1,3 @@
-
-
 import de.bezier.guido.*;
 //Declare and initialize NUM_ROWS and NUM_COLS = 20
 private int NUM_ROWS = 20;
@@ -11,10 +9,10 @@ void setup ()
 {
     size(400, 400);
     textAlign(CENTER,CENTER);
-    
     // make the manager
     Interactive.make( this );
     //your code to declare and initialize buttons goes here
+    bombs = new ArrayList <MSButton>();
     buttons = new MSButton[NUM_ROWS][NUM_COLS];
     for (int r = 0; r < NUM_ROWS; r++)
     {
@@ -28,6 +26,15 @@ void setup ()
 public void setBombs()
 {
     //your code
+    for (int b = 0; b < 50; b++)
+    {
+        int row = (int)(Math.random()*20);
+        int col = (int)(Math.random()*20);
+        if (!bombs.contains(buttons[row][col]))
+        {
+            bombs.add(b,new MSButton(row,col));
+        }
+    }
 }
 
 public void draw ()
@@ -83,6 +90,26 @@ public class MSButton
     {
         clicked = true;
         //your code here
+        if (keyPressed == true)
+        {
+            marked = false;
+        }
+        if(bombs.contains(this))
+            displayLosingMessage();
+        else if (countBombs(r,c) > 0)
+            setLabel(" "+ countBombs(r,c));
+        else
+            if(isValid(r,c-1) && buttons[r][c-1].isClicked() == false)
+            buttons[r][c-1].mousePressed();
+            
+          if(isValid(r,c+1) && buttons[r][c+1].isClicked() == false)
+            buttons[r][c+1].mousePressed();
+            
+          if(isValid(r-1,c) && buttons[r-1][c].isClicked() == false)
+            buttons[r-1][c].mousePressed();
+            
+          if(isValid(r+1,c) && buttons[r+1][c].isClicked() == false)
+            buttons[r+1][c].mousePressed();
     }
 
     public void draw () 
@@ -107,13 +134,38 @@ public class MSButton
     public boolean isValid(int r, int c)
     {
         //your code here
-        return false;
+        if ( r >= 0 && r < NUM_ROWS && c >=0 && c < NUM_COLS)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
     }
     public int countBombs(int row, int col)
     {
         int numBombs = 0;
         //your code here
-        return numBombs;
+        /*if (isValid(row-1,col))
+            numBombs = numBombs +1;
+        if (isValid(row+1,col))
+            numBombs = numBombs +1;
+        if (isValid(row,col-1))
+            numBombs = numBombs +1;
+        if (isValid(row,col+1))
+            numBombs = numBombs +1;
+        if (isValid(row-1,col-1))
+            numBombs = numBombs +1;
+        if (isValid(row+1,col+1))
+            numBombs = numBombs +1;
+        if (isValid(row-1,col+1))
+            numBombs = numBombs +1;
+        if (isValid(row+1,col-1))
+            numBombs = numBombs +1;
+        */
+        return numBombs;  
     }
 }
 
