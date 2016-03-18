@@ -40,6 +40,7 @@ public void setBombs()
 public void draw ()
 {
     background( 0 );
+
     if(isWon())
     displayWinningMessage();
 }
@@ -51,7 +52,7 @@ public boolean isWon()
 public void displayLosingMessage()
 {
     //your code here
-    System.out.print("YOU LOSE!!!");
+    System.out.print("LOSER!!!");
     text("YOU LOSE!!!",200,150);
 
 }
@@ -110,35 +111,50 @@ public class MSButton
         else
         {
             if(isValid(r,c-1) && buttons[r][c-1].isClicked() == false)
+            {
                 buttons[r][c-1].mousePressed();
-            
+            }
             if(isValid(r,c+1) && buttons[r][c+1].isClicked() == false)
+            {
                 buttons[r][c+1].mousePressed();
-            
+            }
             if(isValid(r-1,c) && buttons[r-1][c].isClicked() == false)
+            {
                 buttons[r-1][c].mousePressed();
-            
+            }
             if(isValid(r+1,c) && buttons[r+1][c].isClicked() == false)
+            {
                 buttons[r+1][c].mousePressed();
-
+            }
             if(isValid(r+1,c-1) && buttons[r+1][c-1].isClicked() == false)
+            {
                 buttons[r+1][c-1].mousePressed();
-            
+            }
             if(isValid(r-1,c+1) && buttons[r-1][c+1].isClicked() == false)
+            {
                 buttons[r-1][c+1].mousePressed();
-            
+            }            
             if(isValid(r-1,c-1) && buttons[r-1][c-1].isClicked() == false)
+            {
                 buttons[r-1][c-1].mousePressed();
-            
+            }
             if(isValid(r+1,c+1) && buttons[r+1][c+1].isClicked() == false)
+            {
                 buttons[r+1][c+1].mousePressed();
+            }
         }
+
     }
 
     public void draw () 
     {    
         if (marked)
             fill(0);
+        else if(mouseButton == RIGHT)
+        {
+            clicked = false;
+            fill(0);
+        }
         else  if (clicked && bombs.contains(this) ) 
         {
             fill(255,0,0);
